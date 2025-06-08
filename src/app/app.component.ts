@@ -44,15 +44,14 @@ export class AppComponent implements OnInit, OnDestroy {
       this.products = new MatTableDataSource<ProductData>(data);
       this.products.paginator = this.paginator;
       this.products.sort = this.sort;
-      this.productService.showMessage("Produtos carregados!");
-      //this.totalProduts = this.calculaTotal(products)
+      this.productService.showMessage("Lista notas atuaizada!");
     });
   }
 
   openDialog(action, obj) {
     obj.action = action;
     const dialogRef = this.dialog.open(DialogBoxComponent, {
-      width: '90vw', height: '80vh',
+      width: '960px', height: '680px',
       data: obj
     });
 
@@ -69,8 +68,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
   addRowData(row_obj) {
     if (!this.isProdutoValido(row_obj)) return
+
+    console.log("addRow",row_obj)
     const product = {
-      id: uuidv4(),
+      id: row_obj.id, 
       cnpj: row_obj.cnpj,
       valor_total: row_obj.valor_total,
       data_emissao: row_obj.data_emissao,

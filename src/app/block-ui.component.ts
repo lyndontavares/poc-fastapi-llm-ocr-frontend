@@ -9,7 +9,7 @@ import {Input, Component, Renderer2, ElementRef, ChangeDetectorRef} from '@angul
  
      <div class="loader">
      </div> 
-           <div class="spinner-text">Processando extração...</div>
+           <div class="spinner-text">{{msg}}</div>
 
 
     <!-- http://cfoucht.com/loadlab/ -->
@@ -26,7 +26,7 @@ import {Input, Component, Renderer2, ElementRef, ChangeDetectorRef} from '@angul
 
 .spinner-text {
   position: absolute;
-  top: 50%;
+  top: 44%;
   left: 50%;
   transform: translate(-50%, -50%);
   color: #4169e1; /* azul royal */
@@ -86,12 +86,13 @@ import {Input, Component, Renderer2, ElementRef, ChangeDetectorRef} from '@angul
       /*background-color: #fff;*/
       /*background-color: #e3e3e3;*/
       background-color: rgba(255, 255, 255, 0.4);
-      opacity: 0.6;
+      opacity: 0.9;
     }
   `],
 })
 export class BlockUIComponent {
   @Input('showIf') showIf: boolean;
+  @Input("msg") msg: string = "Processando extração de dados...";
   diameter: number = 60;
 
   constructor(

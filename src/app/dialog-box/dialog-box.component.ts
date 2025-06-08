@@ -3,7 +3,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProductData } from '../product-data.model';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { AlertService } from '../alert.service';
 
 @Component({
@@ -12,6 +11,9 @@ import { AlertService } from '../alert.service';
   styleUrls: ['./dialog-box.component.scss']
 })
 export class DialogBoxComponent { 
+
+  imagePreview: string | null = null;
+  zoomImage = false;
 
   processing=false;
   formGroup: FormGroup;
@@ -42,22 +44,26 @@ export class DialogBoxComponent {
       imagem_hash: new FormControl({value: this.local_data.imagem_hash, disabled: true}, Validators.required),
       status: new FormControl({value: this.local_data.status, disabled: true}, Validators.required),
     });
-
-/*     this.formGroup = this.fb.group({
-      cnpj: [''],
-      data_emissao: [''],
-      valor_total: [''],
-      imagem_hash: [''],
-      status: ['',{disabled: true}],
-      id: ['',{disabled: true}],
-    }); */
+ 
   }
-
 
   doAction() {
-    this.dialogRef.close({ event: this.action, data: this.local_data });
+    this.dialogRef.close({ event: this.action, data: this.formGroup.getRawValue() });
+ 
+/*     this.http.post('http://127.0.0.1:8000/invoices/add', this.formGroup.getRawValue())  
+      .subscribe({
+        next: (res) =>  {
+           //console.log('res',res)
+           this.alertService.showMessage( "Gravado com sucesso!", false);
+           this.dialogRef.close({ event: this.action, data: this.formGroup.getRawValue() });
+           },
+        error: (err) => { 
+           //console.log('err',err) 
+           this.alertService.showMessage(err.error.detail.substring(0, 256), true);
+        }
+    }); */
   }
-
+ 
   closeDialog() {
     this.dialogRef.close({ event: 'Cancel' });
   }
@@ -66,6 +72,7 @@ export class DialogBoxComponent {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
       this.selectedFile = file;
+       this.previewImage(file);
 
       // Preview
       const reader = new FileReader();
@@ -102,16 +109,54 @@ export class DialogBoxComponent {
           })
 
           this.processing=false;
-          this.alertService.showMessage("Processado extração com sucesso",false)
+          this.alertService.showMessage("Extração de dados processada com sucesso!",false)
           console.log('Upload com sucesso', res);
         },
 
         error: (err) => {
           this.processing=false;
-          this.alertService.showMessage(err.error.detail, true);
+          this.limparForm();
+          this.alertService.showMessage(err.error.detail.substring(0, 256), true);
           console.error('Erro no upload', err)
         }
       });
+  }
+
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
+    const file = event.dataTransfer?.files?.[0];
+    if (file) {
+      this.previewImage(file);
+    }
+    (event.currentTarget as HTMLElement).classList.remove('dragover');
+  }
+
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    (event.currentTarget as HTMLElement).classList.add('dragover');
+  }
+
+  onDragLeave(event: DragEvent): void {
+    (event.currentTarget as HTMLElement).classList.remove('dragover');
+  }
+
+  previewImage(file: File): void {
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreview = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  limparForm() {
+    this.formGroup.patchValue({
+          id: '', 
+          cnpj:'', 
+          data_emissao: '', 
+          valor_total:'',
+          imagem_hash:'',
+          status:'',
+    })
   }
 
 }

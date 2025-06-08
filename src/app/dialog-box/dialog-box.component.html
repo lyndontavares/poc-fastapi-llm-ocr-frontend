@@ -1,22 +1,76 @@
 <app-block-ui [showIf]="processing"> 
 
-<h1 mat-dialog-title id="mat-dialog-title"><strong>{{action}} Nota</strong></h1>
+<h1 mat-dialog-title id="mat-dialog-title"><strong>📤 {{action}} Nota</strong></h1>
 
 <div mat-dialog-content>
 
 <div class="container">
+
 <div class="half "> 
- 
-  <input type="file" (change)="onFileSelected($event)" accept="image/*" />
-  
-  <div *ngIf="previewUrl" class="preview">
+
+<!--   <button mat-raised-button color="primary" (click)="fileInput.click()">
+  📁 Selecioinar arquivo
+  </button>
+  <input
+    type="file"
+    hidden
+    #fileInput
+    (change)="onFileSelected($event)"
+  />
+  <div *ngIf="previewUrl" class="drop-zone">
     <img [src]="previewUrl" alt="Preview da imagem" />
   </div>
-  
-  <!-- <button (click)="onUpload()" mat-button [disabled]="!selectedFile">Enviar</button> -->
+  <div *ngIf="!previewUrl" class="drop-zone">
+  </div> -->
 
+
+<div
+  class="drop-zone"
+  (drop)="onDrop($event)"
+  (dragover)="onDragOver($event)"
+  (dragleave)="onDragLeave($event)"
+  (click)="fileInput.click()"
+>
+  <p>Arraste e solte uma imagem aqui</p>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="fileInput.click(); $event.stopPropagation()"
+  >
+    📁 Selecionar imagem
+  </button>
+
+  <input
+    type="file"
+    accept="image/*"
+    hidden
+    #fileInput
+    (change)="onFileSelected($event)"
+  />
 </div>
 
+<!-- Preview -->
+<div class="preview" *ngIf="imagePreview">
+  <p>Pré-visualização:</p>
+  <img
+    [src]="imagePreview"
+    alt="Preview"
+    (click)="zoomImage = true"
+  />
+</div>
+
+<!-- Zoom modal -->
+<div class="zoom-modal" *ngIf="zoomImage" (click)="zoomImage = false">
+  <img [src]="imagePreview" alt="Zoom preview" />
+</div>
+
+
+
+
+
+
+
+</div>
 <div class="half ">
   
 <form [formGroup]="formGroup">
@@ -58,8 +112,8 @@
 
 <div mat-dialog-actions  align="end">
  <div style="min-width: 102px"></div>
- <button id="action-button" mat-button (click)="doAction()">Confirmar</button>
-  <button id="close-button" mat-button (click)="closeDialog()" mat-flat-button color="warn">Cancelar</button>
+ <button id="action-button" mat-flat-button color="primary" (click)="doAction()"  >✅ Gravar</button>
+  <button id="close-button" mat-flat-button (click)="closeDialog()" mat-flat-button  >❌ Cancelar</button>
 </div>
 
 </app-block-ui>

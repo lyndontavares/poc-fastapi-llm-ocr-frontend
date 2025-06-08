@@ -44,7 +44,10 @@ export class ProductService {
   }
 
   create(product: ProductData): Observable<ProductData> {
-    return this.http.post<ProductData>(this.baseUrl, product).pipe(
+    product.id=0;
+    //console.log("Novo: ");
+    //console.log(product);
+    return this.http.post<ProductData>(this.baseUrl+"/add", product).pipe(
       map((obj) => obj),
       catchError(e => this.errorHandler(e))
     )
