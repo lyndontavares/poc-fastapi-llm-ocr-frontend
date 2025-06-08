@@ -7,9 +7,16 @@ https://github.com/lyndontavares/poc-fastapi-llm-ocr
 
 <div align="center">
 
+## Lista de Notas Fiscais
+
 ![](assets/tela1.png)
 
+
+## Adicinar Nota
+
 ![](assets/tela2.png)
+
+## Extração de dados
 
 ![](assets/tela3.png)
 
