@@ -12,7 +12,7 @@ https://github.com/lyndontavares/poc-fastapi-llm-ocr
 ![](assets/tela1.png)
 
 
-## Adicinar Nota
+## Adicionar Nota
 
 ![](assets/tela2.png)
 
