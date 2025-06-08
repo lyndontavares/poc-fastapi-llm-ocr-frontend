@@ -1,0 +1,32 @@
+.fw {
+width: 100%;
+}
+
+.container {
+  display: flex;
+  justify-content: center;     /* centraliza horizontalmente */
+  align-items: flex-start;     /* alinha pelo topo */
+  gap: 10px;                   /* espaçamento entre as divs, opcional */
+}
+
+.half {
+  width: 50%;
+    box-sizing: border-box;
+  padding: 0px;
+}
+
+.left {
+  background-color: lightblue;
+}
+
+.right {
+  background-color: lightcoral;
+}
+
+.preview img {
+  max-width: 400px;
+  border: 2px solid #d2dbdd;
+  padding: 4px;
+  border-radius: 4px;
+
+}

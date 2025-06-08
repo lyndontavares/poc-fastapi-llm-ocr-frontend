@@ -1,0 +1,65 @@
+<app-block-ui [showIf]="processing"> 
+
+<h1 mat-dialog-title id="mat-dialog-title"><strong>{{action}} Nota</strong></h1>
+
+<div mat-dialog-content>
+
+<div class="container">
+<div class="half "> 
+ 
+  <input type="file" (change)="onFileSelected($event)" accept="image/*" />
+  
+  <div *ngIf="previewUrl" class="preview">
+    <img [src]="previewUrl" alt="Preview da imagem" />
+  </div>
+  
+  <!-- <button (click)="onUpload()" mat-button [disabled]="!selectedFile">Enviar</button> -->
+
+</div>
+
+<div class="half ">
+  
+<form [formGroup]="formGroup">
+  <mat-form-field class="fw" *ngIf="action != 'Delete'; else elseTemplate" >
+    <input placeholder="ID" matInput formControlName="id" readonly>
+  </mat-form-field>
+
+  <mat-form-field class="fw" *ngIf="action != 'Delete'; else elseTemplate" >
+    <input placeholder="CNPJ" matInput formControlName="cnpj">
+  </mat-form-field>
+
+  <mat-form-field  class="fw" *ngIf="action != 'Delete'; else elseTemplate">
+    <input placeholder="Data emissão" matInput formControlName="data_emissao">
+  </mat-form-field>
+
+  <mat-form-field  class="fw" *ngIf="action != 'Delete'; else elseTemplate">
+    <input placeholder="Valor Pago" matInput formControlName="valor_total">
+  </mat-form-field>
+  
+  <mat-form-field  class="fw" *ngIf="action != 'Delete'; else elseTemplate">
+    <input placeholder="Hash" matInput formControlName="imagem_hash" readonly  >
+  </mat-form-field>
+
+   <mat-form-field  class="fw" *ngIf="action != 'Delete'; else elseTemplate">
+    <input placeholder="Status" matInput formControlName="status" readonly  >
+  </mat-form-field>
+
+  <ng-template #elseTemplate>
+    Deletar <b>{{local_data.id}} ?</b>?
+  </ng-template>
+
+ </form>
+</div>
+</div>
+
+
+</div>
+
+
+<div mat-dialog-actions  align="end">
+ <div style="min-width: 102px"></div>
+ <button id="action-button" mat-button (click)="doAction()">Confirmar</button>
+  <button id="close-button" mat-button (click)="closeDialog()" mat-flat-button color="warn">Cancelar</button>
+</div>
+
+</app-block-ui>

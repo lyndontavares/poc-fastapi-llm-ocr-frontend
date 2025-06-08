@@ -1,0 +1,81 @@
+<p>
+  <mat-toolbar color="primary">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span id="title" class="title">{{title}}</span>
+    <span class="example-spacer"></span>
+    <button id="aboutButton" mat-icon-button [routerLink]="['/about']" >
+      <mat-icon>info</mat-icon>
+    </button>
+    <button mat-icon-button (click)="fetchData()">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </mat-toolbar>
+</p>
+
+<div class="container text-center">
+
+  <div class="btn-actions">
+    <button appBlurOnClick mat-button id="btnAdicionar" (click)="openDialog('Adicionar',{})" mat-flat-button color="primary">Adicionar Nota</button>
+  </div>
+
+  <table mat-table [dataSource]="products" #mytable class="my-table mat-elevation-z8">
+
+    <!-- Id Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="cnpj">
+      <th mat-header-cell *matHeaderCellDef> CNPJ </th>
+      <td mat-cell *matCellDef="let element"> {{element.cnpj}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="data_emissao">
+      <th mat-header-cell *matHeaderCellDef> Data Emisão </th>
+      <td mat-cell *matCellDef="let element"> {{element.data_emissao}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="valor_total">
+      <th mat-header-cell *matHeaderCellDef> Valor Pago </th>
+      <td mat-cell *matCellDef="let element"> {{element.valor_total | currency:'BRL' }} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="imagem_hash">
+      <th mat-header-cell *matHeaderCellDef> Hash </th>
+      <td mat-cell *matCellDef="let element"> {{element.imagem_hash}} </td>
+    </ng-container>
+
+      <!-- Name Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+    </ng-container>
+
+    <!-- Action Column -->
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> Action </th>
+      <td mat-cell *matCellDef="let element" class="action-link">
+        <a (click)="openDialog('Editar',element)">Editar</a> |
+        <a (click)="openDialog('Excluir',element)">Excluir</a>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 20]" showFirstLastButtons></mat-paginator>
+
+<!--     <mat-toolbar color="default">
+      <span class="example-spacer"></span>
+      <span>Valor Total: {{totalProduts | currency:'BRL'}}</span>
+    </mat-toolbar> -->
+
+</div>
