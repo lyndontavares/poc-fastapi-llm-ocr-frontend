@@ -62,8 +62,7 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef> Action </th>
       <td mat-cell *matCellDef="let element" class="action-link">
-        <a (click)="openDialog('Editar',element)">Editar</a> |
-        <a (click)="openDialog('Excluir',element)">Excluir</a>
+        <a (click)="deleteRowData(element)">Excluir</a>
       </td>
     </ng-container>
 

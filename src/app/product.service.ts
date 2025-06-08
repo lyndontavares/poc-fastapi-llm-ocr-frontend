@@ -24,7 +24,8 @@ export class ProductService {
   }
 
   errorHandler(e: any): Observable<any> {
-    this.showMessage('Erro!', true);
+    this.showMessage(e.error.detail.substring(0, 256), true);
+    //this.showMessage('Erro!', true);
     return EMPTY;
   }
 

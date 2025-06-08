@@ -2,26 +2,13 @@
 
 <h1 mat-dialog-title id="mat-dialog-title"><strong>📤 {{action}} Nota</strong></h1>
 
+<h3> Demonstra a extração de dados com IA. Versão utilizada: <span>gemini-2.0-flash</span></h3>
+
 <div mat-dialog-content>
 
 <div class="container">
 
-<div class="half "> 
-
-<!--   <button mat-raised-button color="primary" (click)="fileInput.click()">
-  📁 Selecioinar arquivo
-  </button>
-  <input
-    type="file"
-    hidden
-    #fileInput
-    (change)="onFileSelected($event)"
-  />
-  <div *ngIf="previewUrl" class="drop-zone">
-    <img [src]="previewUrl" alt="Preview da imagem" />
-  </div>
-  <div *ngIf="!previewUrl" class="drop-zone">
-  </div> -->
+<div class="half"> 
 
 
 <div
@@ -51,13 +38,13 @@
 
 <!-- Preview -->
 <div class="preview" *ngIf="imagePreview">
-  <p>Pré-visualização:</p>
   <img
     [src]="imagePreview"
     alt="Preview"
     (click)="zoomImage = true"
   />
 </div>
+ 
 
 <!-- Zoom modal -->
 <div class="zoom-modal" *ngIf="zoomImage" (click)="zoomImage = false">
@@ -109,10 +96,10 @@
 
 </div>
 
-
+<hr/>
 <div mat-dialog-actions  align="end">
  <div style="min-width: 102px"></div>
- <button id="action-button" mat-flat-button color="primary" (click)="doAction()"  >✅ Gravar</button>
+ <button id="action-button" mat-flat-button color="primary" (click)="doAction()"  [disabled]="!formGroup.valid || formGroup.controls['status'].value=='PROCESSADO'  " >✅ Gravar</button>
   <button id="close-button" mat-flat-button (click)="closeDialog()" mat-flat-button  >❌ Cancelar</button>
 </div>
 

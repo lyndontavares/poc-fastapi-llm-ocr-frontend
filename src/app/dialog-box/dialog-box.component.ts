@@ -48,9 +48,12 @@ export class DialogBoxComponent {
   }
 
   doAction() {
-    this.dialogRef.close({ event: this.action, data: this.formGroup.getRawValue() });
+
+    console.log( this.action);
+
+    // this.dialogRef.close({ event: this.action, data: this.formGroup.getRawValue() });
  
-/*     this.http.post('http://127.0.0.1:8000/invoices/add', this.formGroup.getRawValue())  
+    this.http.post('http://127.0.0.1:8000/invoices/add', this.formGroup.getRawValue())  
       .subscribe({
         next: (res) =>  {
            //console.log('res',res)
@@ -58,10 +61,13 @@ export class DialogBoxComponent {
            this.dialogRef.close({ event: this.action, data: this.formGroup.getRawValue() });
            },
         error: (err) => { 
-           //console.log('err',err) 
-           this.alertService.showMessage(err.error.detail.substring(0, 256), true);
+           console.log('err',err) 
+           this.alertService.showMessage(err , true);
+           //this.alertService.showMessage(err.error.detail.substring(0, 256), true);
         }
-    }); */
+    }); 
+    
+   
   }
  
   closeDialog() {
@@ -109,7 +115,11 @@ export class DialogBoxComponent {
           })
 
           this.processing=false;
-          this.alertService.showMessage("Extração de dados processada com sucesso!",false)
+          let msg = "Extração de dados processada com sucesso!";
+          if ( res["status"] === 'PROCESSADO') {
+            msg = msg + "[Importante: Nota já processada! Não será permitido notas duplicadas.";
+          }
+          this.alertService.showMessage(msg,false)
           console.log('Upload com sucesso', res);
         },
 

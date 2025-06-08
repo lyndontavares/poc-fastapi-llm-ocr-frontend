@@ -51,17 +51,18 @@ export class AppComponent implements OnInit, OnDestroy {
   openDialog(action, obj) {
     obj.action = action;
     const dialogRef = this.dialog.open(DialogBoxComponent, {
-      width: '960px', height: '680px',
+      width: '960px', height: '710px',
       data: obj
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.fetchData();
       if (result.event == 'Adicionar') {
-        this.addRowData(result.data);
+        //this.addRowData(result.data);
       } else if (result.event == 'Editar') {
-        this.updateRowData(result.data);
+        //this.updateRowData(result.data);
       } else if (result.event == 'Excluir') {
-        this.deleteRowData(result.data);
+       // this.deleteRowData(result.data);
       }
     });
   }
@@ -109,9 +110,6 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
-/*   calculaTotal(products: ProductData[]): number {
-    return products.reduce((total, valor) => total + (valor.price * valor.quantity), 0);
-  } */
 
   isProdutoValido(produto): boolean {
     if (!produto) {
